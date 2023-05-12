@@ -15,10 +15,10 @@ const Navibar = () => (
       </a>
       <ul className="dropdown-menu dropdown-menu-top d-style-one">
         <li>
-          <Link to="/"><span>Edit Profile</span></Link>
+          <Link to="/edit-profile"><span>Edit Profile</span></Link>
         </li>
         <li>
-          <Link to="/"><span>Sign Out</span></Link>
+          <Link to="/login"><span>Sign Out</span></Link>
         </li>
       </ul>
     </div>
