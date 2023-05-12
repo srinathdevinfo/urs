@@ -1,9 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
 import { Link, useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import { login } from '../../actions/auth';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginComponent = () => {
   const navigate = useNavigate();
+  // const [loading, setLoading] = useState(false);
+
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.message);
+  useEffect(() => {
+    if (message) {
+      toast.error(message, {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    }
+  }, [message]);
+
+  const dispatch = useDispatch();
+  if (isLoggedIn) {
+    navigate('/profile');
+  }
 
   return (
 
@@ -25,15 +54,22 @@ const LoginComponent = () => {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          navigate('/profile');
-          // alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+        // setLoading(true);
+        dispatch(login(values.email, values.password))
+          .then(() => {
+            navigate('/profile');
+            setSubmitting(false);
+          //  window.location.reload();
+          })
+          .catch(() => {
+            // setLoading(false);
+          });
       }}
     >
+
       {({ isSubmitting }) => (
         <Form className="signin-form">
+          <ToastContainer />
 
           <div className="form-group mt-3">
             <label htmlFor="username">Username</label>

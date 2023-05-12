@@ -1,9 +1,14 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  if (!isLoggedIn) {
+    navigate('/login');
+  }
 
   return (
     <section className="profile-section container mh-85">
