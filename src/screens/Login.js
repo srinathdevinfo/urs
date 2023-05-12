@@ -4,7 +4,7 @@ import LoginComponent from '../components/LoginComponent/LoginComponent';
 import GenaralLayout from '../layouts/GenaralLayout';
 
 const Login = () => (
-  <GenaralLayout>
+  <GenaralLayout type="login">
     <LoginComponent />
   </GenaralLayout>
 

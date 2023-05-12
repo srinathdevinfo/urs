@@ -31,11 +31,10 @@ const LoginComponent = () => {
       }}
     >
       {({ isSubmitting }) => (
-        <Form>
-          <h3>Sign In</h3>
-          <div className="mb-3">
-            <label>Email address</label>
+        <Form className="signin-form">
 
+          <div className="form-group mt-3">
+            <label htmlFor="username">Username</label>
             <Field
               type="email"
               name="email"
@@ -44,35 +43,23 @@ const LoginComponent = () => {
             />
             <ErrorMessage name="email" component="div" />
           </div>
-          <div className="mb-3">
-            <label>Password</label>
-            <input
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <Field
               type="password"
+              name="password"
+              placeholder="Enter email address"
               className="form-control"
-              placeholder="Enter password"
             />
+            <ErrorMessage name="email" component="div" />
+            <span className="fa fa-fw fa-eye field-icon toggle-password" />
           </div>
-          <div className="mb-3">
-            <div className="custom-control custom-checkbox">
-              <input
-                type="checkbox"
-                className="custom-control-input"
-                id="customCheck1"
-              />
-              <label className="custom-control-label" htmlFor="customCheck1">
-                Remember me
-              </label>
+          <div className="form-group"><button type="submit" className="form-control btn btn-primary rounded submit px-3" disabled={isSubmitting}>Login</button></div>
+          <div className="form-group d-md-flex">
+            <div className="w-100 text-left">
+              <label>Still Have No Account ? <Link to="/">SIGNUP</Link> Now</label>
             </div>
           </div>
-          <div className="d-grid">
-            <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-              Submit
-            </button>
-          </div>
-          <p className="forgot-password text-right">
-            <Link to="/sign-up">        sign up
-            </Link>
-          </p>
         </Form>
       )}
     </Formik>
