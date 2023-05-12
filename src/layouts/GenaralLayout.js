@@ -18,22 +18,25 @@ const GenaralLayout = ({ children, type }) => {
               </div>
             </div>
           )
-          : (
+          : (type !== 'login' && type !== 'success') ? (
             <div className="row justify-content-center">
               <div className="col-md-7 col-lg-5 mb-1">
-                <h2 className="heading-section mb-0 pl-3 pb-2"><Link to="/"><i className="fa fa-angle-left pr-2 fs-34 text-white" /></Link> Create Account</h2>
+                <Link to="/"><h2 className="heading-section mb-0 pl-3 pb-2"><i className="fa fa-angle-left pr-2 fs-34 text-white" />Create Account</h2></Link>
               </div>
             </div>
-          )}
+          ) : ''}
         <div className="row justify-content-center">
           <div className="col-md-7 col-lg-5">
             <div className="wrap">
               <div className="login-wrap">
-                <div className="text-center">
-                  <div className="w-100">
-                    <h3 className="mb-4 pt-2">ABC COMPANY</h3>
-                  </div>
-                </div>
+                { type !== 'success'
+                  ? (
+                    <div className="text-center">
+                      <div className="w-100">
+                        <h3 className="mb-4 pt-2">ABC COMPANY</h3>
+                      </div>
+                    </div>
+                  ) : ''}
                 {children}
               </div>
             </div>

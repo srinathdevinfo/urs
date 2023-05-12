@@ -8129,7 +8129,7 @@ body {
   font-size: 16px;
   line-height: 1.8;
   font-weight: normal;
-  background: #f8f9fd;
+  background: #ffffff;
   color: gray; }
 
 a {
@@ -8201,10 +8201,24 @@ h1, h2, h3, h4, h5,
         font-weight: 600;
         color: #000;
 }
+.msg-wrap {
+  position: relative;
+  padding: 30px;
+}
+.msg-wrap h2 {
+    color:#000;
+    font-weight: 600;
+}
+.msg-wrap p {
+  color:#000;
+  font-weight: 600;
+}
+.message-icon .msg-success{
+  color: #0ece00;
+}
 .form-group {
   position: relative;
-  z-index: 0;
-  margin-bottom: 20px !important; }
+  z-index: 0; }
   .form-group a {
     color: #FF9800; }
     .login-info{
@@ -8491,8 +8505,43 @@ h1, h2, h3, h4, h5,
   background-color: #e1e3e9;
   color: #000;
 }
+.gender-selection input[type="radio"]:first-child{
+  margin: 0;
+}
+.gender-selection input[type="radio"]{
+  visibility: hidden;
+  height: 0;
+  width: 0;
+  margin: 0px 10px 0px 0px;
+}
+.gender-selection input[type="radio"]:checked + label{
+  background-color: transparent;
+    border: 2px solid #205387;
+    color: #205387;
+}
+.gender-selection {
+  width: 100%;
+    height: 48px;
+    position: relative;
+    display: table;
+}
+.gender-selection label {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    background-color: transparent;
+    color: #9d9d9d;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: all 0.3s ease-out;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+}
 @media (max-width: 767px) {
   .profile-section .profile-con img {
     width: 8rem;
   }
+}
+.text-red-500 {
+  color:red;
 }

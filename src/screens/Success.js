@@ -1,9 +1,13 @@
 import React from 'react';
 
 import GenaralLayout from '../layouts/GenaralLayout';
+import SuccessComponent from '../components/SuccessComponent/SuccessComponent';
 
 const Success = () => (
-  <GenaralLayout>success</GenaralLayout>
+
+  <GenaralLayout type="success">
+    <SuccessComponent />
+  </GenaralLayout>
 
 );
 

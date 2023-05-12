@@ -18,6 +18,8 @@ const LoginComponent = () => {
           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
         ) {
           errors.email = 'Invalid email address';
+        } else if (!values.password) {
+          errors.password = 'Password cannot be empty ';
         }
 
         return errors;
@@ -41,7 +43,7 @@ const LoginComponent = () => {
               placeholder="Enter email address"
               className="form-control"
             />
-            <ErrorMessage name="email" component="div" />
+            <ErrorMessage name="email" component="div" className="text-red-500 " />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
@@ -51,13 +53,13 @@ const LoginComponent = () => {
               placeholder="Enter email address"
               className="form-control"
             />
-            <ErrorMessage name="email" component="div" />
+            <ErrorMessage name="password" component="div" className="text-red-500 " />
             <span className="fa fa-fw fa-eye field-icon toggle-password" />
           </div>
           <div className="form-group"><button type="submit" className="form-control btn btn-primary rounded submit px-3" disabled={isSubmitting}>Login</button></div>
           <div className="form-group d-md-flex">
             <div className="w-100 text-left">
-              <label>Still Have No Account ? <Link to="/">SIGNUP</Link> Now</label>
+              <label>Still Have No Account ? <Link to="/sign-up">SIGNUP</Link> Now</label>
             </div>
           </div>
         </Form>
