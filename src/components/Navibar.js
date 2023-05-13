@@ -15,7 +15,7 @@ const Navibar = () => {
   }, [dispatch]);
   return (
     <nav className="navbar navbar-expand-md navbar-gray bg-gray fixed-top">
-      <Link className="navbar-brand" to="/">ABC COMPANY</Link>
+      <Link className="navbar-brand" to="#/">ABC COMPANY</Link>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon" />
       </button>

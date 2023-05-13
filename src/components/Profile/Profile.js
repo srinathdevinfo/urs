@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -7,18 +7,17 @@ import axios from 'axios';
 // { user } from '../../actions/auth';
 
 const Profile = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
   const [selected, setSelected] = useState('');
-  const [fname, setFname] = useState(user?.result?.first_name);
-  const [lname, setLname] = useState(user?.result?.last_name);
-  const [male, setMale] = useState(user?.result?.email);
-  const [dob, setDob] = useState(user?.result?.dob);
+
   // const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state) => state.auth);
-  if (!isLoggedIn) {
-    navigate('/login');
-  }
+  // const { isLoggedIn } = useSelector((state) => state.auth);
+  // useEffect(() => {
+  //   if (!isLoggedIn) {
+  //     navigate('/login');
+  //   }
+  // }, []);
 
   return (
     <section className="profile-section container mh-85">
@@ -51,7 +50,7 @@ const Profile = () => {
 
             return errors;
           }}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values) => {
             const userinfo = JSON.parse(localStorage.getItem('user'));
             const config = {
               headers: {
@@ -61,20 +60,14 @@ const Profile = () => {
             // const url = 'api endpoint';
 
             const data = {
-              first_name: values.first_name,
-              last_name: values.last_name,
-              dob: values.dob,
+              first_name: values.first_name !== '' ? values.first_name : (user?.result?.first_name),
+              last_name: values.last_name !== '' ? values.last_name : (user?.result?.last_name),
+              dob: values.dob !== '' ? values.dob : (user?.result?.dob),
               gender: values.selected,
             };
             axios.put('https://mditest.elifeamerica.com/api/v1/profile', data, config)
               .then((res) => console.log(res))
               .catch((err) => console.log(err));
-            // setTimeout(() => {
-            // navigate('/success');
-            // alert(JSON.stringify(values, null, 2))
-            setSubmitting(false);
-
-            // }, 400);
           }}
         >
           {({ isSubmitting }) => (
@@ -89,9 +82,7 @@ const Profile = () => {
                       type="text"
                       name="first_name"
                       placeholder={user?.result?.first_name}
-                      value={fname}
                       className="form-control"
-                      onChange={(event) => { setFname(event.target.value); }}
 
                     />
                     <ErrorMessage name="first_name" component="div" className="text-red-500 " />
@@ -104,9 +95,7 @@ const Profile = () => {
                     <Field
                       type="text"
                       name="last_name"
-                      value={lname}
                       placeholder={user?.result?.last_name}
-                      onChange={(event) => { setLname(event.target.value); }}
                       className="form-control"
                     />
                     <ErrorMessage name="last_name" component="div" className="text-red-500 " />
@@ -119,9 +108,7 @@ const Profile = () => {
                 <Field
                   type="email"
                   name="email"
-                  value={male}
-                  onChange={(event) => { setMale(event.target.value); }}
-                  placeholder="Enter email address"
+                  placeholder={user?.result?.email}
                   className="form-control"
                 />
                 <ErrorMessage name="email" component="div" className="text-red-500 " />
@@ -133,9 +120,7 @@ const Profile = () => {
                 <Field
                   type="text"
                   name="dob"
-                  value={dob}
-                  onChange={(event) => { setDob(event.target.value); }}
-                  placeholder=""
+                  placeholder={user?.result?.dob}
                   className="form-control"
                 />
                 <ErrorMessage name="password" component="div" className="text-red-500 " />
@@ -145,14 +130,16 @@ const Profile = () => {
                 <label htmlFor="password">Gender</label>
 
                 <div className="row">
-                  <div className="col-lg-4"> <span className={`btn btn-outline-dark ${selected === 'male' ? 'btn-primary' : ''}`} onClick={() => { setSelected('male'); }}>Male</span></div>
-                  <div className="col-lg-4"> <span className={`btn btn-outline-dark ${selected === 'female' ? 'btn-primary' : ''}`} onClick={() => { setSelected('female'); }}>Female</span></div>
-                  <div className="col-lg-4"> <span className={`btn btn-outline-dark ${selected === 'other' ? 'btn-primary' : ''}`} onClick={() => { setSelected('other'); }}>Other</span></div>
+                  <div className="col-lg-4"> <Link to="#/" className={`btn btn-outline-dark ${selected === '1' ? 'btn-primary' : ''}`} onClick={(e) => { e.preventDefault(); setSelected('1'); }}>Male</Link></div>
+                  <div className="col-lg-4"> <Link to="#/" className={`btn btn-outline-dark ${selected === '2' ? 'btn-primary' : ''}`} onClick={(e) => { e.preventDefault(); setSelected('2'); }}>Female</Link></div>
+                  <div className="col-lg-4"> <Link to="#/" className={`btn btn-outline-dark ${selected === '3' ? 'btn-primary' : ''}`} onClick={(e) => { e.preventDefault(); setSelected('3'); }}>Other</Link></div>
 
                 </div>
               </div>
 
-              <div className="form-group"><button type="submit" className="form-control btn btn-primary rounded submit px-3" disabled={isSubmitting}>Update Profile Details</button></div>
+              <div className="form-group">
+                <button type="submit" className="form-control btn btn-primary rounded submit px-3" disabled={isSubmitting}>Update Profile Details</button>
+              </div>
 
             </Form>
           )}

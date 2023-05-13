@@ -14,6 +14,11 @@ const LoginComponent = () => {
 
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
+
+  if (isLoggedIn) {
+    navigate('/profile');
+  }
+
   useEffect(() => {
     if (message) {
       toast.error(message, {
