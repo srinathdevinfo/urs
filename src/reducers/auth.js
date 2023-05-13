@@ -4,6 +4,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  USER_INFO,
 } from '../actions/types';
 
 const user = JSON.parse(localStorage.getItem('user'));
@@ -43,6 +44,12 @@ export default function (state = initialState, action) {
         ...state,
         isLoggedIn: false,
         user: null,
+      };
+    case USER_INFO:
+      return {
+        ...state,
+        isLoggedIn: false,
+        user: payload.user,
       };
     default:
       return state;

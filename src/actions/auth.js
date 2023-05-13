@@ -5,6 +5,8 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   SET_MESSAGE,
+  USER_INFO,
+  USER_FAIL,
 } from './types';
 
 import AuthService from '../services/AuthService';
@@ -78,3 +80,33 @@ export const logout = () => (dispatch) => {
     type: LOGOUT,
   });
 };
+
+export const user = () => (dispatch) => AuthService.user().then(
+  (data) => {
+    dispatch({
+      type: USER_INFO,
+      payload: { user: data },
+    });
+
+    return Promise.resolve();
+  },
+  (error) => {
+    const message = (error.response
+            && error.response.data
+            && error.response.data.message)
+          || error.message
+          || error.toString();
+
+    dispatch({
+      type: USER_FAIL,
+    });
+
+    dispatch({
+      type: SET_MESSAGE,
+      payload: message,
+    });
+
+    return Promise.reject();
+  },
+);
+

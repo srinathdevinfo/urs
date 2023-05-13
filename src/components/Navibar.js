@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/auth';
 
 const Navibar = () => {
-  const { user: currentUser } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,8 +22,8 @@ const Navibar = () => {
 
       <div className="collapse navbar-collapse user-menu" id="navbarsExampleDefault">
         <a href="#/" className="cus-p-tb-2 d-flex align-items-center  ml-auto" data-toggle="dropdown" aria-expanded="false">
-          <span className="hidden-xs u-name"> {currentUser && currentUser.email} </span>
-          <img src="https://spurstandardattachment.s3.amazonaws.com/images/users/male.png?AWSAccessKeyId=AKIAJYINCTJDCJ4ETLQQ&amp;Expires=1683947234&amp;Signature=oSVLPzZFwVOFFn0zCXz8QuBh0%2FA%3D" className="user-image current-user-img" />
+          <span className="hidden-xs u-name"> { user && user?.result?.first_name} {user?.result?.last_name}</span>
+          <img src={user && user.result?.profile_image?.thumb} className="user-image current-user-img" />
         </a>
         <ul className="dropdown-menu dropdown-menu-top d-style-one">
           <li>

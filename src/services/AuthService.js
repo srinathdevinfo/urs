@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AuthHeader from './AuthHeader';
 
 const TOKEN_API_URL = 'https://mditest.elifeamerica.com/oauth/token';
 const API_URL = 'https://mditest.elifeamerica.com/api/v1/';
@@ -22,7 +23,7 @@ const login = (username, password, client_id = 4, client_secret = 'sfQfhp6tDeGvE
     grant_type: 'password',
   })
   .then((response) => {
-    if (response.data.accessToken) {
+    if (response.data.access_token) {
       localStorage.setItem('user', JSON.stringify(response.data));
     }
 
@@ -33,8 +34,11 @@ const logout = () => {
   localStorage.removeItem('user');
 };
 
+const user = () => axios.get(`${API_URL}profile`, { headers: AuthHeader() }).then((response) => response.data);
+
 export default {
   register,
   login,
   logout,
+  user,
 };
