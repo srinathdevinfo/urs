@@ -6,17 +6,25 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
+  // const dispatch = useDispatch();
+
   const { user } = useSelector((state) => state.auth);
+  const FILE_INPUT = document.querySelector('input[type=file]');
   const handleUpload = (e) => {
     e.preventDefault();
     // const UPLOAD_BUTTON = document.getElementById('upload-button');
-    const FILE_INPUT = document.querySelector('input[type=file]');
 
     FILE_INPUT.click();
   };
 
   const handleImageUpload = async (e) => {
     const AVATAR = document.getElementById('avatar');
+    const photo = FILE_INPUT.files[0];
+    console.log({ photo });
+    const formData = new FormData();
+
+    formData.append('files[0]', 'profile_image');
+
     AVATAR.src = URL.createObjectURL(e.target.files[0]);
     AVATAR.onload = function () {
       URL.revokeObjectURL(AVATAR.src); // free memory
@@ -30,11 +38,7 @@ const Home = () => {
     };
     // const url = 'api endpoint';
 
-    const data = {
-      profile_image: e.target.files[0],
-
-    };
-    axios.post('https://mditest.elifeamerica.com/api/v1/profile', data, config)
+    axios.put('https://mditest.elifeamerica.com/api/v1/profile', formData, config)
       .then((res) => {
         console.log(res);
         toast.success('success', {
@@ -47,6 +51,7 @@ const Home = () => {
           progress: undefined,
           theme: 'light',
         });
+        // dispatch(user());
       })
       .catch((err) => {
         console.log(err);
