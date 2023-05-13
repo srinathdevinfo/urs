@@ -1,15 +1,104 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
   const { user } = useSelector((state) => state.auth);
+  const handleUpload = (e) => {
+    e.preventDefault();
+    // const UPLOAD_BUTTON = document.getElementById('upload-button');
+    const FILE_INPUT = document.querySelector('input[type=file]');
+
+    FILE_INPUT.click();
+  };
+
+  const handleImageUpload = async (e) => {
+    const AVATAR = document.getElementById('avatar');
+    AVATAR.src = URL.createObjectURL(e.target.files[0]);
+    AVATAR.onload = function () {
+      URL.revokeObjectURL(AVATAR.src); // free memory
+    };
+
+    const userinfo = JSON.parse(localStorage.getItem('user'));
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userinfo.access_token}`,
+      },
+    };
+    // const url = 'api endpoint';
+
+    const data = {
+      profile_image: e.target.files[0],
+
+    };
+    axios.post('https://mditest.elifeamerica.com/api/v1/profile', data, config)
+      .then((res) => {
+        console.log(res);
+        toast.success('success', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error('error', {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      });
+  };
+
+  // UPLOAD_BUTTON.addEventListener('click', () => FILE_INPUT.click());
+  // FILE_INPUT.addEventListener('change', (event) => {
+  //   const file = event.target.files[0];
+
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(file);
+
+  //   reader.onloadend = () => {
+  //     AVATAR.setAttribute('aria-label', file.name);
+  //     AVATAR.style.background = `url(${reader.result}) center center/cover`;
+  //   };
+  // });
+
   return (
     <section className="profile-section container mh-85">
-
+      <ToastContainer />
       <div className="row justify-content-center">
         <div className="col-md-6 col-lg-6 profile-con pb-5">
           <div className="d-flex align-items-end">
-            <img src={user && user.result?.profile_image?.thumb} className="rounded-circle img-thumbnail" />
+
+            <input type="file" name="image" id="image" accept="image/*" onChange={(e) => handleImageUpload(e)} />
+            <div id="preview-wrapper">
+              <div id="preview"> <img src={user && user.result?.profile_image?.thumb} className="rounded-circle img-thumbnail" id="avatar" />
+                <button
+                  id="upload-button"
+                  aria-label="upload image"
+                  aria-describedby="image"
+                  type="button"
+                  onClick={(e) => { handleUpload(e); }}
+                >
+                  +
+                </button>
+              </div>
+
+            </div>
+
             <div className="w-100 pl-5"><h4 className="mb-0">Welcome</h4>
               <h2 className="my-0">Mr. {user && user?.result?.first_name} { user && user?.result?.last_name} </h2>
             </div>
